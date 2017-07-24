@@ -1,50 +1,44 @@
-package com.yolotasker.yolotasker.activity;
+package com.yolotasker.yolotasker.ui.activity;
 
-import android.support.v4.widget.DrawerLayout;
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
-import android.widget.ListView;
 
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.yolotasker.yolotasker.R;
-import com.yolotasker.yolotasker.fragment.RewardFragment;
-import com.yolotasker.yolotasker.fragment.TaskFragment;
-
-import butterknife.BindView;
+import com.yolotasker.yolotasker.ui.fragment.RewardFragment;
+import com.yolotasker.yolotasker.ui.fragment.TaskFragment;
 
 public class MainActivity extends ActionBarActivity {
 
-    private FrameLayout mFrameContent;
-    private ListView mDrawerListView;
-    private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
 
     private Drawer.Result drawerResult;
+
+    public static Context context;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = getApplicationContext();
         setContentView(R.layout.activity_main);
-        String[] titles = getResources().getStringArray(R.array.fragments_titles);
-
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        initDrawer();
+        if(savedInstanceState == null){
+            drawerResult.setSelection(1);
+        }
+    }
 
+    private void initDrawer(){
         drawerResult = new Drawer()
                 .withActivity(this)
                 .withToolbar(mToolbar)
@@ -75,10 +69,5 @@ public class MainActivity extends ActionBarActivity {
                     }
                 })
                 .build();
-
-        if(savedInstanceState == null){
-            drawerResult.setSelection(2);
-        }
-
     }
 }
