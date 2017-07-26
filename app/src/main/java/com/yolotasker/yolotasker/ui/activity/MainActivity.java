@@ -12,6 +12,8 @@ import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.yolotasker.yolotasker.R;
+import com.yolotasker.yolotasker.ui.AndroidApplication;
+import com.yolotasker.yolotasker.ui.component.ApplicationComponent;
 import com.yolotasker.yolotasker.ui.fragment.RewardFragment;
 import com.yolotasker.yolotasker.ui.fragment.TaskFragment;
 
@@ -27,6 +29,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getApplicationComponent().inject(this);
         context = getApplicationContext();
         setContentView(R.layout.activity_main);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -69,5 +72,10 @@ public class MainActivity extends ActionBarActivity {
                     }
                 })
                 .build();
+    }
+
+    protected ApplicationComponent getApplicationComponent() {
+        AndroidApplication application = (AndroidApplication) getApplication();
+        return application.getApplicationComponent();
     }
 }

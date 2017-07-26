@@ -11,6 +11,8 @@ import com.yolotasker.yolotasker.domain.usecase.TaskUseCase;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by AndroidDev on 24.07.2017.
  */
@@ -19,8 +21,9 @@ public class TaskUseCaseImpl implements TaskUseCase {
 
     private TaskRepository taskRepository;
 
-    public TaskUseCaseImpl(){
-        taskRepository = new TaskRepositoryImpl();
+    @Inject
+    public TaskUseCaseImpl(TaskRepository taskRepository){
+        this.taskRepository = taskRepository;
     }
 
     @Override

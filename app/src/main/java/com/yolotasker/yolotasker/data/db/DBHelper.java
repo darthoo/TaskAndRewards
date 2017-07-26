@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.yolotasker.yolotasker.data.model.BaseModel;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by AndroidDev on 11.07.2017.
  */
@@ -26,6 +29,8 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String TAG = DBHelper.class.getSimpleName();
     private static final String DB_NAME = "YOLO_tasker_database";
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/M/yyyy");
+
+    private Context context;
 
 
     private static final String TASK_TABLE = "CREATE TABLE IF NOT EXISTS "
@@ -46,8 +51,10 @@ public class DBHelper extends SQLiteOpenHelper {
             + RewardFields.REWARD_PRICE + " INTEGER"
             + ");";
 
-    public DBHelper(Context context) {
-        super(context,DB_NAME,null,DB_VERSION);
+    @Inject
+    public DBHelper(@NonNull Context context) {
+        super(context.getApplicationContext(),DB_NAME,null,DB_VERSION);
+        this.context = context.getApplicationContext();
     }
 
     @Override

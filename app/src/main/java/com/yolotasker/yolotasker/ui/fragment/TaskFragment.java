@@ -22,6 +22,8 @@ import com.yolotasker.yolotasker.ui.presenter.TaskPresenterImpl;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by AndroidDev on 13.07.2017.
  */
@@ -32,7 +34,8 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Task
     private LinearLayoutManager layoutManager;
     private CardViewAdapter mAdapter;
     private FloatingActionButton mAddTaskButton;
-    private TaskPresenter mPresenter;
+    @Inject
+    TaskPresenter mPresenter;
 
     @Nullable
     @Override
@@ -50,12 +53,18 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Task
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(),layoutManager.getOrientation());
         mRecyclerView.addItemDecoration(itemDecoration);
 
-        mPresenter = new TaskPresenterImpl(this);
+        /*mPresenter = new TaskPresenterImpl(this);*/
 
         if(savedInstanceState == null){
            mPresenter.getTasks();
         }
         return v;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mPresenter.setView(this);
     }
 
     @Override

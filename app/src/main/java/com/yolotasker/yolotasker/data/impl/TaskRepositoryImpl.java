@@ -7,7 +7,10 @@ import com.yolotasker.yolotasker.data.db.DBHelper;
 import com.yolotasker.yolotasker.data.model.Task;
 import com.yolotasker.yolotasker.ui.activity.MainActivity;
 
+import java.lang.annotation.Inherited;
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Created by AndroidDev on 24.07.2017.
@@ -17,9 +20,10 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     private DBHelper dbHelper;
 
-    public TaskRepositoryImpl() {
+    @Inject
+    public TaskRepositoryImpl(DBHelper dbHelper) {
         //TODO Implement dependency injection via dagger
-        dbHelper = new DBHelper(MainActivity.context);
+        this.dbHelper = dbHelper;
     }
 
     @Override
