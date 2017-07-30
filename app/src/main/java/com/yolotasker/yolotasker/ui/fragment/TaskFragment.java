@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yolotasker.yolotasker.R;
+import com.yolotasker.yolotasker.ui.AndroidApplication;
 import com.yolotasker.yolotasker.ui.activity.CreateTaskActivity;
 import com.yolotasker.yolotasker.ui.adapter.CardViewAdapter;
 import com.yolotasker.yolotasker.ui.model.TaskUiModel;
@@ -36,6 +37,13 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Task
     private FloatingActionButton mAddTaskButton;
     @Inject
     TaskPresenter mPresenter;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        AndroidApplication app = (AndroidApplication)getActivity().getApplication();
+        app.getApplicationComponent().inject(this);
+    }
 
     @Nullable
     @Override

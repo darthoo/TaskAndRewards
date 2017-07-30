@@ -17,8 +17,13 @@ package com.yolotasker.yolotasker.ui.module;
 
 import android.content.Context;
 import com.yolotasker.yolotasker.data.TaskRepository;
+import com.yolotasker.yolotasker.data.db.DBHelper;
 import com.yolotasker.yolotasker.data.impl.TaskRepositoryImpl;
+import com.yolotasker.yolotasker.domain.usecase.TaskUseCase;
+import com.yolotasker.yolotasker.domain.usecase.impl.TaskUseCaseImpl;
 import com.yolotasker.yolotasker.ui.AndroidApplication;
+import com.yolotasker.yolotasker.ui.mvp.TaskPresenter;
+import com.yolotasker.yolotasker.ui.presenter.TaskPresenterImpl;
 
 import javax.inject.Singleton;
 
@@ -42,7 +47,17 @@ public class ApplicationModule {
   }
 
   @Provides @Singleton
-  TaskRepository provideTaskRepository(TaskRepositoryImpl taskRepository) {
-    return taskRepository;
+  TaskRepository provideTaskRepository(DBHelper dbHelper) {
+    return new TaskRepositoryImpl(dbHelper);
+  }
+
+  @Provides @Singleton
+  TaskPresenter provideTaskPresenter(TaskUseCase taskUseCase) {
+    return new TaskPresenterImpl(taskUseCase);
+  }
+
+  @Provides @Singleton
+  TaskUseCase providesTaskUseCase(TaskRepository taskRepository){
+    return new TaskUseCaseImpl(taskRepository);
   }
 }
