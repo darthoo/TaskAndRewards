@@ -1,6 +1,5 @@
 package com.yolotasker.yolotasker.ui.fragment;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,25 +10,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.yolotasker.yolotasker.R;
-import com.yolotasker.yolotasker.ui.AndroidApplication;
 import com.yolotasker.yolotasker.ui.activity.CreateTaskActivity;
 import com.yolotasker.yolotasker.ui.adapter.CardViewAdapter;
+import com.yolotasker.yolotasker.ui.component.ApplicationComponent;
 import com.yolotasker.yolotasker.ui.model.TaskUiModel;
 import com.yolotasker.yolotasker.ui.mvp.TaskPresenter;
 import com.yolotasker.yolotasker.ui.mvp.TaskView;
-import com.yolotasker.yolotasker.ui.presenter.TaskPresenterImpl;
-
-import java.util.List;
 
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * Created by AndroidDev on 13.07.2017.
  */
 
-public class TaskFragment extends Fragment implements View.OnClickListener, TaskView {
+public class TaskFragment extends BaseFragment implements View.OnClickListener, TaskView {
 
     private RecyclerView mRecyclerView;
     private LinearLayoutManager layoutManager;
@@ -41,8 +37,7 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Task
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AndroidApplication app = (AndroidApplication)getActivity().getApplication();
-        app.getApplicationComponent().inject(this);
+        getComponent(ApplicationComponent.class).inject(this);
     }
 
     @Nullable
@@ -60,19 +55,12 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Task
 
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(),layoutManager.getOrientation());
         mRecyclerView.addItemDecoration(itemDecoration);
-
-        /*mPresenter = new TaskPresenterImpl(this);*/
+        mPresenter.setView(this);
 
         if(savedInstanceState == null){
            mPresenter.getTasks();
         }
         return v;
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mPresenter.setView(this);
     }
 
     @Override

@@ -7,17 +7,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
 import android.util.Log;
-
 import com.yolotasker.yolotasker.data.model.BaseModel;
 import com.yolotasker.yolotasker.data.model.Reward;
 import com.yolotasker.yolotasker.data.model.Task;
 
+import javax.inject.Inject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.inject.Inject;
 
 /**
  * Created by AndroidDev on 11.07.2017.
@@ -112,5 +110,26 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         return tasks;
+    }
+
+    public List<Reward> selectAllRewards(){
+        String sql = "Select* from "+RewardFields.REWARD_TABLE_NAME;
+        SQLiteDatabase db = this.getWritableDatabase();
+        List<Reward> rewards = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery(sql,null);
+
+        if(cursor.moveToFirst()){
+            for(int i=0; i<cursor.getCount();i++){
+                Reward reward = new Reward();
+                reward.setId(cursor.getInt(0));
+                reward.setTitle(cursor.getString(1));
+                reward.setPrice(cursor.getInt(2));
+                rewards.add(reward);
+                cursor.moveToNext();
+            }
+        }
+
+        return rewards;
     }
 }

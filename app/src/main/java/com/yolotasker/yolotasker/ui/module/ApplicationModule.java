@@ -16,19 +16,24 @@
 package com.yolotasker.yolotasker.ui.module;
 
 import android.content.Context;
+import com.yolotasker.yolotasker.data.RewardRepository;
 import com.yolotasker.yolotasker.data.TaskRepository;
 import com.yolotasker.yolotasker.data.db.DBHelper;
+import com.yolotasker.yolotasker.data.impl.RewardRepositoryTestImpl;
 import com.yolotasker.yolotasker.data.impl.TaskRepositoryImpl;
+import com.yolotasker.yolotasker.domain.usecase.RewardUseCase;
 import com.yolotasker.yolotasker.domain.usecase.TaskUseCase;
+import com.yolotasker.yolotasker.domain.usecase.impl.RewardUseCaseImpl;
 import com.yolotasker.yolotasker.domain.usecase.impl.TaskUseCaseImpl;
 import com.yolotasker.yolotasker.ui.AndroidApplication;
+import com.yolotasker.yolotasker.ui.mvp.RewardPresenter;
 import com.yolotasker.yolotasker.ui.mvp.TaskPresenter;
+import com.yolotasker.yolotasker.ui.presenter.RewardPresenterImpl;
 import com.yolotasker.yolotasker.ui.presenter.TaskPresenterImpl;
-
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
+
+import javax.inject.Singleton;
 
 /**
  * Dagger module that provides objects which will live during the application lifecycle.
@@ -52,12 +57,27 @@ public class ApplicationModule {
   }
 
   @Provides @Singleton
+  RewardRepository provideRewardRepository(DBHelper dbHelper) {
+    return new RewardRepositoryTestImpl(dbHelper);
+  }
+
+  @Provides @Singleton
   TaskPresenter provideTaskPresenter(TaskUseCase taskUseCase) {
     return new TaskPresenterImpl(taskUseCase);
   }
 
   @Provides @Singleton
+  RewardPresenter provideRewardPresenter(RewardUseCase useCase) {
+    return new RewardPresenterImpl(useCase);
+  }
+
+  @Provides @Singleton
   TaskUseCase providesTaskUseCase(TaskRepository taskRepository){
     return new TaskUseCaseImpl(taskRepository);
+  }
+
+  @Provides @Singleton
+  RewardUseCase providesRewardUseCase(RewardRepository rewardRepository){
+    return new RewardUseCaseImpl(rewardRepository);
   }
 }

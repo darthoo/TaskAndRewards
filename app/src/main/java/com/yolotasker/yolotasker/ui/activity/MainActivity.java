@@ -1,12 +1,11 @@
 package com.yolotasker.yolotasker.ui.activity;
 
 import android.content.Context;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
-
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
@@ -16,29 +15,28 @@ import com.yolotasker.yolotasker.ui.AndroidApplication;
 import com.yolotasker.yolotasker.ui.component.ApplicationComponent;
 import com.yolotasker.yolotasker.ui.fragment.RewardFragment;
 import com.yolotasker.yolotasker.ui.fragment.TaskFragment;
+import com.yolotasker.yolotasker.ui.utils.HasComponent;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements HasComponent<ApplicationComponent> {
 
     private Toolbar mToolbar;
-
     private Drawer.Result drawerResult;
-
     public static Context context;
-
+    private ApplicationComponent appComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getApplicationComponent().inject(this);
-        context = getApplicationContext();
         setContentView(R.layout.activity_main);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initDrawer();
         if(savedInstanceState == null){
-            drawerResult.setSelection(1);
+            drawerResult.setSelection(0);
         }
+        AndroidApplication application = (AndroidApplication) getApplication();
+        appComponent = application.getApplicationComponent();
     }
 
     private void initDrawer(){
@@ -74,8 +72,8 @@ public class MainActivity extends ActionBarActivity {
                 .build();
     }
 
-    protected ApplicationComponent getApplicationComponent() {
-        AndroidApplication application = (AndroidApplication) getApplication();
-        return application.getApplicationComponent();
+    @Override
+    public ApplicationComponent getComponent() {
+        return appComponent;
     }
 }
