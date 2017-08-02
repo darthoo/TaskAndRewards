@@ -1,6 +1,6 @@
 package com.yolotasker.yolotasker.ui.activity;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,16 +13,13 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.yolotasker.yolotasker.R;
 import com.yolotasker.yolotasker.ui.AndroidApplication;
 import com.yolotasker.yolotasker.ui.component.ApplicationComponent;
-import com.yolotasker.yolotasker.ui.fragment.RewardFragment;
-import com.yolotasker.yolotasker.ui.fragment.TaskFragment;
 import com.yolotasker.yolotasker.ui.utils.HasComponent;
 
 public class MainActivity extends ActionBarActivity implements HasComponent<ApplicationComponent> {
 
-    private Toolbar mToolbar;
-    private Drawer.Result drawerResult;
-    public static Context context;
-    private ApplicationComponent appComponent;
+    protected Toolbar mToolbar;
+    protected Drawer.Result drawerResult;
+    protected ApplicationComponent appComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +36,7 @@ public class MainActivity extends ActionBarActivity implements HasComponent<Appl
         appComponent = application.getApplicationComponent();
     }
 
-    private void initDrawer(){
+    protected void initDrawer(){
         drawerResult = new Drawer()
                 .withActivity(this)
                 .withToolbar(mToolbar)
@@ -57,14 +54,16 @@ public class MainActivity extends ActionBarActivity implements HasComponent<Appl
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
                         switch (position){
                             case 2:
-                                getFragmentManager().beginTransaction()
-                                        .replace(R.id.frame_content,new TaskFragment())
-                                        .commit();
+                               /* getFragmentManager().beginTransaction()
+                                        .replace(R.id.frame_content,new TaskInProgressFragment())
+                                        .commit();*/
+                               startActivity(new Intent(getApplicationContext(), TaskActivity.class));
                                 break;
                             case 3:
-                                getFragmentManager().beginTransaction()
+                              /*  getFragmentManager().beginTransaction()
                                         .replace(R.id.frame_content,new RewardFragment())
-                                        .commit();
+                                        .commit();*/
+                                startActivity(new Intent(getApplicationContext(), RewardActivity.class));
                                 break;
                         }
                     }

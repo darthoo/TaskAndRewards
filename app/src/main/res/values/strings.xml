@@ -14,4 +14,7 @@
     <string name="task_description">Task description</string>
     <string name="submit">Submit</string>
 
+    <string name="in_progress_task_title">In progress</string>
+    <string name="completed_task_title">Completed</string>
+
 </resources>

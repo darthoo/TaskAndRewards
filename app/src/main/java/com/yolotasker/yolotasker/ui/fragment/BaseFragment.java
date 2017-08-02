@@ -1,6 +1,7 @@
 package com.yolotasker.yolotasker.ui.fragment;
 
-import android.app.Fragment;
+
+import android.support.v4.app.Fragment;
 import com.yolotasker.yolotasker.ui.utils.HasComponent;
 
 /**

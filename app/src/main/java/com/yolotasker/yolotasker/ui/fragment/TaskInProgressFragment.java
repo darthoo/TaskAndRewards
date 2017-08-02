@@ -25,7 +25,7 @@ import java.util.List;
  * Created by AndroidDev on 13.07.2017.
  */
 
-public class TaskFragment extends BaseFragment implements View.OnClickListener, TaskView {
+public class TaskInProgressFragment extends BaseFragment implements View.OnClickListener, TaskView {
 
     private RecyclerView mRecyclerView;
     private LinearLayoutManager layoutManager;
